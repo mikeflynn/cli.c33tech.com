@@ -9,17 +9,18 @@ export const shell = async (
 ) => {
   const args = command.split(' ');
   args[0] = args[0].toLowerCase();
+  const cmd = args[0].replace('.', "_dot_");
 
   if (args[0] === 'clear') {
     clearHistory();
   } else if (command === '') {
     setHistory('');
-  } else if (Object.keys(bin).indexOf(args[0]) === -1) {
+  } else if (Object.keys(bin).indexOf(cmd) === -1) {
     setHistory(
       `shell: command not found: ${args[0]}. Try 'help' to get started.`,
     );
   } else {
-    const output = await bin[args[0]](args.slice(1));
+    const output = await bin[cmd](args.slice(1));
     setHistory(output);
   }
 

@@ -1,39 +1,36 @@
 {
-  "readmeUrl": "https://raw.githubusercontent.com/cveinnt/cveinnt/master/README.md",
-  "title": "LiveTerm",
-  "name": "John Doe",
-  "ascii": "liveterm",
+  "readmeUrl": "#",
+  "title": "C33",
+  "name": "C33 Technology",
+  "ascii": "c33",
   "social": {
-    "github": "github",
-    "linkedin": "linkedin"
+    "github": "https://github.com/mikeflynn",
+    "linkedin": "https://www.linkedin.com/company/c33tech/",
+    "twitter": "https://twitter.com/c33tech"
   },
-  "email": "contact@email.com",
-  "ps1_hostname": "liveterm",
-  "ps1_username": "visitor",
-  "repo": "https://github.com/Cveinnt/LiveTerm",
-  "resume_url": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Resume.pdf",
-  "donate_urls": {
-    "paypal": "https://paypal.me/cveinnt",
-    "patreon": "https://patreon.com/cveinnt"
-  },
+  "meeting": "https://hub.flexibits.com/openings/mike-is6y/c33-30min/",
+  "email": "team@c33tech.com",
+  "ps1_hostname": "c33tech",
+  "ps1_username": "anon",
+  "resume_url": "#",
   "colors": {
     "light": {
       "background": "#FBF1C9",
       "foreground": "#3C3836",
       "yellow": "#D79921",
-      "green": "#98971A",
+      "green": "#c33",
       "gray": "#7C6F64",
       "blue": "#458588",
-      "red": "#CA2124"
+      "red": "#c33"
     },
     "dark": {
       "background": "#2E3440",
       "foreground": "#E5E9F0",
       "yellow": "#5E81AC",
-      "green": "#A3BE8C",
+      "green": "#c33",
       "gray": "#88C0D0",
       "blue": "#EBCB8B",
-      "red": "#BF616A"
+      "red": "#c33"
     }
   }
 }

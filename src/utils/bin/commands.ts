@@ -2,10 +2,12 @@
 
 import * as bin from './index';
 import config from '../../../config.json';
+import { default as sumfetch } from './sumfetch';
 
 // Help
 export const help = async (args: string[]): Promise<string> => {
-  const commands = Object.keys(bin).sort().join(', ');
+  const commands = Object.keys(bin).filter(cmd => !cmd.includes("_dot_")).sort().join(', ');
+  /*
   var c = '';
   for (let i = 1; i <= Object.keys(bin).sort().length; i++) {
     if (i % 7 === 0) {
@@ -14,42 +16,19 @@ export const help = async (args: string[]): Promise<string> => {
       c += Object.keys(bin).sort()[i - 1] + ' ';
     }
   }
+  */
   return `Welcome! Here are all the available commands:
-\n${c}\n
+\n${commands}\n
 [tab]: trigger completion.
 [ctrl+l]/clear: clear terminal.\n
-Type 'sumfetch' to display summary.
+Type 'about' to display the intro.
 `;
-};
-
-// Redirection
-export const repo = async (args: string[]): Promise<string> => {
-  window.open(`${config.repo}`);
-  return 'Opening Github repository...';
 };
 
 // About
 export const about = async (args: string[]): Promise<string> => {
-  return `Hi, I am ${config.name}. 
-Welcome to my website!
-More about me:
-'sumfetch' - short summary.
-'resume' - my latest resume.
-'readme' - my github readme.`;
-};
-
-export const resume = async (args: string[]): Promise<string> => {
-  window.open(`${config.resume_url}`);
-  return 'Opening resume...';
-};
-
-// Donate
-export const donate = async (args: string[]): Promise<string> => {
-  return `thank you for your interest. 
-here are the ways you can support my work:
-- <u><a class="text-light-blue dark:text-dark-blue underline" href="${config.donate_urls.paypal}" target="_blank">paypal</a></u>
-- <u><a class="text-light-blue dark:text-dark-blue underline" href="${config.donate_urls.patreon}" target="_blank">patreon</a></u>
-`;
+  const about = await sumfetch(args);
+  return about;
 };
 
 // Contact
@@ -60,13 +39,11 @@ export const email = async (args: string[]): Promise<string> => {
 
 export const github = async (args: string[]): Promise<string> => {
   window.open(`https://github.com/${config.social.github}/`);
-
   return 'Opening github...';
 };
 
 export const linkedin = async (args: string[]): Promise<string> => {
   window.open(`https://www.linkedin.com/in/${config.social.linkedin}/`);
-
   return 'Opening linkedin...';
 };
 
@@ -91,6 +68,15 @@ export const reddit = async (args: string[]): Promise<string> => {
   return `Searching reddit for ${args.join(' ')}...`;
 };
 
+export const post = async (args?: string[]): Promise<string> => {
+  return "Not currently supported."
+};
+
+export const meeting = async (args?: string[]): Promise<string> => {
+  window.open(`${config.meeting}`);
+  return `Opening a window to set a meeting with C33...`;
+};
+
 // Typical linux commands
 export const echo = async (args: string[]): Promise<string> => {
   return args.join(' ');
@@ -101,11 +87,8 @@ export const whoami = async (args: string[]): Promise<string> => {
 };
 
 export const ls = async (args: string[]): Promise<string> => {
-  return `a
-bunch
-of
-fake
-directories`;
+  const scripts = Object.keys(bin).filter(cmd => cmd.includes("_dot_")).map(cmd => cmd.replace('_dot_', ".")).sort().join('\n');
+  return `${scripts}`;
 };
 
 export const cd = async (args: string[]): Promise<string> => {
@@ -117,41 +100,96 @@ export const date = async (args: string[]): Promise<string> => {
   return new Date().toString();
 };
 
-export const vi = async (args: string[]): Promise<string> => {
-  return `woah, you still use 'vi'? just try 'vim'.`;
-};
-
-export const vim = async (args: string[]): Promise<string> => {
-  return `'vim' is so outdated. how about 'nvim'?`;
-};
-
-export const nvim = async (args: string[]): Promise<string> => {
-  return `'nvim'? too fancy. why not 'emacs'?`;
-};
-
-export const emacs = async (args?: string[]): Promise<string> => {
-  return `you know what? just use vscode.`;
-};
-
 export const sudo = async (args?: string[]): Promise<string> => {
   window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank'); // ...I'm sorry
   return `Permission denied: with little power comes... no responsibility? `;
 };
 
+export const history = async (args?: string[]): Promise<string> => {
+  return "Not currently supported."
+};
+
+export const ssh = async (args?: string[]): Promise<string> => {
+  return `
+The authenticity of host '${args[0]}' (23.75.345.200)' can't be established.
+ED25519 key fingerprint is SHA256:2t1SyRaE55f2FkBIsVVTMOuyTjIHkD+U9hToqjIagV4.
+Host key verification failed.
+  `
+};
+
+export const cowsay = async (args?: string[]): Promise<string> => {
+  return `
+  ______________________________________
+ /                                      \\
+ | ${args.join(" ")}                    |
+ \\                                      /
+  --------------------------------------
+        \\   ^__^
+         \\  (oo)\\_______
+            (__)\\       )\\/\\
+                ||----w |
+                ||     ||
+  `;
+};
+
+export const msfconsole = async (args?: string[]): Promise<string> => {
+  return `
+    \\           _    _            _
+     \\         | |  | |          | |
+      \\\\       | |__| | __ _  ___| | __
+       \\\\      |  __  |/ _' |/ __| |/ /
+        >\/7    | |  | | (_| | (__|   <
+    _.-(6'  \\  |_|  |_|\\__,_|\\___|_|\\_\\
+   (=___._/' \\         _   _
+        )  \\ |        | | | |
+       /   / |        | |_| |__   ___
+      /    > /        | __| '_ \\ / _ \\
+     j    < _\\        | |_| | | |  __/
+ _.-' :      ''.       \\__|_| |_|\\___|
+ \\ r=._\\        '.
+<'\\\\_  \\         .'-.          _____  _                  _   _
+ \\ r-7  '-. ._  ' .  '\\       |  __ \\| |                | | | |
+  \\',      '-.'7  7)   )      | |__) | | __ _ _ __   ___| |_| |
+   \\/         \\|  \\'  / '-._  |  ___/| |/ _' | '_ \\ / _ \\ __| |
+              ||    .'        | |    | | (_| | | | |  __/ |_|_|
+               \\  (           |_|    |_|\\__,_|_| |_|\\___|\\__(_)
+                >\\  >
+            ,.-' >.'
+           <.'_.''
+             <'
+
+[+] Starting database
+[+] Creating database user 'msf'
+[+] Creating databases 'msf'
+[+] Creating databases 'msf_test'
+[+] Creating configuration file '/usr/share/metasploit-framework/config/database.yml'
+[+] Creating initial database schema
+
+Nice try, but this is just a web browser. <a href="https://www.kali.org/get-kali/" style="text-decoration: underline;">Download Kali</a>, hacker.`;
+};
+
+// Scripts
+export const gibson_hack_dot_sh = async (args?: string[]): Promise<string> => {
+  return `<img src="/assets/img/hackers.gif" >
+  `;
+};
+
+export const parrot_dot_sh = async (args?: string[]): Promise<string> => {
+  return `<img src="/assets/img/party-parrot.gif" >
+  `;
+};
+
 // Banner
 export const banner = (args?: string[]): string => {
   return `
-█████        ███                       ███████████                                   
-░░███        ░░░                       ░█░░░███░░░█                                   
- ░███        ████  █████ █████  ██████ ░   ░███  ░   ██████  ████████  █████████████  
- ░███       ░░███ ░░███ ░░███  ███░░███    ░███     ███░░███░░███░░███░░███░░███░░███ 
- ░███        ░███  ░███  ░███ ░███████     ░███    ░███████  ░███ ░░░  ░███ ░███ ░███ 
- ░███      █ ░███  ░░███ ███  ░███░░░      ░███    ░███░░░   ░███      ░███ ░███ ░███ 
- ███████████ █████  ░░█████   ░░██████     █████   ░░██████  █████     █████░███ █████
-░░░░░░░░░░░ ░░░░░    ░░░░░     ░░░░░░     ░░░░░     ░░░░░░  ░░░░░     ░░░░░ ░░░ ░░░░░ 
+ ██████╗██████╗ ██████╗     ████████╗███████╗ ██████╗██╗  ██╗
+██╔════╝╚════██╗╚════██╗    ╚══██╔══╝██╔════╝██╔════╝██║  ██║
+██║      █████╔╝ █████╔╝       ██║   █████╗  ██║     ███████║
+██║      ╚═══██╗ ╚═══██╗       ██║   ██╔══╝  ██║     ██╔══██║
+╚██████╗██████╔╝██████╔╝       ██║   ███████╗╚██████╗██║  ██║
+ ╚═════╝╚═════╝ ╚═════╝        ╚═╝   ╚══════╝ ╚═════╝╚═╝  ╚═╝
 
 Type 'help' to see the list of available commands.
-Type 'sumfetch' to display summary.
-Type 'repo' or click <u><a class="text-light-blue dark:text-dark-blue underline" href="${config.repo}" target="_blank">here</a></u> for the Github repository.
+Type 'about' to see the intro for the site.
 `;
 };
